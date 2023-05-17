@@ -1,21 +1,28 @@
 use google_maps::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize)]
+/// Input object to transform to distances.
+#[derive(Debug, Deserialize)]
 pub struct HotelsAndPOIS {
   hotels: Vec<Waypoint>,
   pois: Vec<Waypoint>,
 }
 
-#[derive(Serialize, Debug)]
+/// Output object containing distance and time for two locations.
+#[derive(Debug, Serialize)]
 pub struct DistanceTime {
+  /// Starting location.
   pub from: String,
+  /// Target location.
   pub to: String,
+  /// Total distance.
   pub distance: String,
+  /// Total duration.
   pub duration: String,
 }
 
 impl HotelsAndPOIS {
+  /// Distance and time calculation.
   pub async fn get_distance_and_time(
     self,
     client: GoogleMapsClient,
