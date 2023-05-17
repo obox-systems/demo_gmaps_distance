@@ -1,14 +1,14 @@
+use clap::Parser;
 use dotenv::dotenv;
 use gmaps_distance::utils::*;
 use google_maps::prelude::*;
 use secrecy::ExposeSecret;
-use clap::Parser;
 use secrecy::Secret;
 
 /// Google Maps Distance and Time Calculator
-/// 
+///
 /// This program calculates the distance and time between hotels and POIs
-/// 
+///
 /// The input file should be a JSON file containing an array of hotels and an array of POIs
 #[derive(Parser)]
 #[clap(version = "0.1.0", author = "Viktor Dudnik")]
@@ -18,15 +18,15 @@ struct Args {
   pub file: String,
 
   /// The path to the JSON file to write the distance and time to
-  /// 
+  ///
   /// Note: If the file already exists, it will be overwritten
   #[clap(short, long, default_value = "distime.json")]
   pub output: String,
 
   /// The Google Maps API key
-  /// 
+  ///
   /// Note: If not provided, the program will look for the GOOGLE_API_KEY environment variable
-  /// 
+  ///
   /// If the environment variable is not set, the program will exit with an error
   #[clap(short, long, env = "GOOGLE_API_KEY")]
   pub api_key: Option<Secret<String>>,
@@ -43,7 +43,7 @@ async fn main() -> anyhow::Result<()> {
     std::process::exit(1);
   };
 
-  let google_maps_client = GoogleMapsClient::new(&api_key.expose_secret());
+  let google_maps_client = GoogleMapsClient::new(api_key.expose_secret());
 
   println!("Reading from file: {}", args.file);
   let data = read_from_file(&args.file)?;

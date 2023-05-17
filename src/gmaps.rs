@@ -39,7 +39,7 @@ impl HotelsAndPOIS {
           from: distance_matrix.origin_addresses[i].clone(),
           to: distance_matrix.destination_addresses[j].clone(),
           distance: element.distance.map_or("unknown".into(), |d| d.text),
-          duration: element.duration.map_or("unknown".into(), |d| d.text)
+          duration: element.duration.map_or("unknown".into(), |d| d.text),
         });
       }
     }
